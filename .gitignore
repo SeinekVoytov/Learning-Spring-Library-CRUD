@@ -34,3 +34,6 @@ atlassian-ide-plugin.xml
 
 # Editor-based Rest Client
 .idea/httpRequests
+
+# Database properties
+src/main/resources/database.properties
