@@ -2,7 +2,7 @@ package org.example.model;
 
 public class Book {
 
-    private int id;
+    private int bookId;
     private int memberId;
     private String title;
     private String author;
@@ -11,20 +11,20 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, int memberId, String title, String author, int publishingYear) {
-        this.id = id;
+    public Book(int bookId, int memberId, String title, String author, int publishingYear) {
+        this.bookId = bookId;
         this.memberId = memberId;
         this.title = title;
         this.author = author;
         this.publishingYear = publishingYear;
     }
 
-    public int getId() {
-        return id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public int getMemberId() {
