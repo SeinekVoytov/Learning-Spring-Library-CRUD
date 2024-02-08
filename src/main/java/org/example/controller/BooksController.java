@@ -1,11 +1,11 @@
 package org.example.controller;
 
 import org.example.dao.BookDAO;
+import org.example.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/books")
@@ -22,5 +22,16 @@ public class BooksController {
     public String index(Model model) {
         model.addAttribute("books", dao.index());
         return "books/index";
+    }
+
+    @GetMapping("/new")
+    public String newBook(@ModelAttribute("book") Book book) {
+        return "books/new";
+    }
+
+    @PostMapping()
+    public String createNewBook(@ModelAttribute("book") Book newBook) {
+        dao.save(newBook);
+        return "redirect:/books";
     }
 }
