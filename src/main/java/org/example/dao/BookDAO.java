@@ -2,7 +2,6 @@ package org.example.dao;
 
 import org.example.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -25,12 +24,12 @@ public class BookDAO {
 
     public Optional<Book> show(int id) {
         return jdbcTemplate.query("SELECT * FROM Book WHERE book_id = ?",
-                new BeanPropertyRowMapper<>(Book.class), id).stream().findAny();
+                new BookMapper(), id).stream().findAny();
     }
 
     public void update(Book updatedBook, int id) {
-        jdbcTemplate.update("UPDATE Book SET member_id = ?, title = ?, author = ?, publishing_year = ? WHERE book_id = ?",
-                updatedBook.getMemberId(), updatedBook.getTitle(), updatedBook.getAuthor(), updatedBook.getPublishingYear(), id);
+        jdbcTemplate.update("UPDATE Book SET title = ?, author = ?, publishing_year = ? WHERE book_id = ?",
+                updatedBook.getTitle(), updatedBook.getAuthor(), updatedBook.getPublishingYear(), id);
     }
 
     public void save(Book bookToBeSaved) {
