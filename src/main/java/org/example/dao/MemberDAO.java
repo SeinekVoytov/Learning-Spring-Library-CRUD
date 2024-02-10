@@ -20,12 +20,13 @@ public class MemberDAO {
     }
 
     public List<Member> index() {
-        return jdbcTemplate.query("SELECT * FROM Member", new BeanPropertyRowMapper<>(Member.class));
+        return jdbcTemplate.query("SELECT * FROM Member M LEFT JOIN Book B on M.member_id = B.member_id",
+                new MemberResultSetExtractor());
     }
 
     public Optional<Member> show(int id) {
-        return jdbcTemplate.query("SELECT * FROM Member WHERE member_id = ?",
-                new BeanPropertyRowMapper<>(Member.class), id).stream().findAny();
+        return jdbcTemplate.query("SELECT * FROM Member M LEFT JOIN Book B on M.member_id = B.member_id WHERE M.member_id = ?",
+                new MemberResultSetExtractor(), id).stream().findAny();
     }
 
     public void update(Member updatedMember, int id) {
