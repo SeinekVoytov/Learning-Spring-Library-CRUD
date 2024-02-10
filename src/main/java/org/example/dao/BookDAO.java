@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +40,15 @@ public class BookDAO {
 
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM Book WHERE book_id = ?", id);
+    }
+
+    public void makeBookAvailable(int id) {
+        jdbcTemplate.update("UPDATE Book SET member_id = ? WHERE book_id = ?",
+                new Object[]{null, id}, new int[]{Types.NULL, Types.INTEGER});
+    }
+
+    public void makeBookUnavailable(Book bookWithUpdatedMemberId, int id) {
+        jdbcTemplate.update("UPDATE Book SET member_id = ? WHERE book_id = ?",
+                bookWithUpdatedMemberId.getMemberId(), id);
     }
 }

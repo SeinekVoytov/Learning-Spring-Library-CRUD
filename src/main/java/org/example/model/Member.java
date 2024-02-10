@@ -2,25 +2,25 @@ package org.example.model;
 
 public class Member {
 
-    private int id;
+    private int memberId;
     private String fullName;
     private int birthYear;
 
     public Member() {
     }
 
-    public Member(int id, String fullName, int birthYear) {
-        this.id = id;
+    public Member(int memberId, String fullName, int birthYear) {
+        this.memberId = memberId;
         this.fullName = fullName;
         this.birthYear = birthYear;
     }
 
-    public int getId() {
-        return id;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getFullName() {
