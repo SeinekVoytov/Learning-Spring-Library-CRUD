@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/members")
@@ -23,8 +24,22 @@ public class MembersController {
 
     @GetMapping()
     public String index(Model model) {
-        List<Member> list = dao.index();
-        model.addAttribute("members", list);
+        model.addAttribute("members", dao.index());
         return "members/index";
+    }
+
+    @GetMapping("/{id}")
+    public String show(Model model,
+                       @PathVariable("id") int id) {
+
+        Optional<Member> optionalMemberToBeShowed = dao.show(id);
+        if (optionalMemberToBeShowed.isEmpty()) {
+            return "error/not-found";
+        }
+
+        Member memberToBeShowed = optionalMemberToBeShowed.get();
+        model.addAttribute("member", memberToBeShowed);
+
+        return "members/show";
     }
 }
