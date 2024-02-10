@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Member {
 
+    // TODO: 11.02.24 validation
     private int memberId;
     private String fullName;
     private int birthYear;

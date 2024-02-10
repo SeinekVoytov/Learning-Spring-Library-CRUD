@@ -28,11 +28,16 @@ public class MemberDAO {
                 new MemberResultSetExtractor(), id).stream().findAny();
     }
 
+    public void save(Member memberToBeSaved) {
+        jdbcTemplate.update("INSERT INTO Member(full_name, birth_year) VALUES (?, ?)",
+                memberToBeSaved.getFullName(), memberToBeSaved.getBirthYear());
+    }
+
     public void update(Member updatedMember, int id) {
 
     }
 
     public void delete(int id) {
-
+        jdbcTemplate.update("DELETE FROM Member WHERE member_id = ?", id);
     }
 }
