@@ -1,12 +1,22 @@
 package org.example.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 public class Member {
 
-    // TODO: 11.02.24 validation
     private int memberId;
+
+    @Size(min = 3, max = 100, message = "Name length should be between 3 and 100")
     private String fullName;
+
+    @NotNull(message = "Birth age cannot be null")
+    @Min(value = 1900, message = "Birth year cannot be less than 1900")
+    @Max(value = 2014, message = "Birth year cannot be greater than 2014")
     private int birthYear;
     private List<Book> takenBooks;
 

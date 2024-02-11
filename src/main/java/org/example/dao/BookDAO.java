@@ -43,8 +43,7 @@ public class BookDAO {
     }
 
     public void makeBookAvailable(int id) {
-        jdbcTemplate.update("UPDATE Book SET member_id = ? WHERE book_id = ?",
-                new Object[]{null, id}, new int[]{Types.NULL, Types.INTEGER});
+        jdbcTemplate.update("UPDATE Book SET member_id = NULL WHERE book_id = ?", id);
     }
 
     public void makeBookUnavailable(Book bookWithUpdatedMemberId, int id) {

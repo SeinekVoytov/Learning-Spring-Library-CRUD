@@ -10,11 +10,13 @@
 
       <label for="fullName">Enter full name</label>
       <input type="text" th:field="*{fullName}" id="fullName">
+      <div style="color: red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
 
       <br>
 
       <label for="birthYear">Enter birth year</label>
       <input type="number" th:field="*{birthYear}" id="birthYear">
+      <div style="color: red" th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}"></div>
 
       <br>
 

@@ -1,11 +1,13 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.dao.BookDAO;
 import org.example.dao.MemberDAO;
 import org.example.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -56,7 +58,13 @@ public class BooksController {
     }
 
     @PostMapping()
-    public String createNewBook(@ModelAttribute("book") Book newBook) {
+    public String createNewBook(@ModelAttribute("book") @Valid Book newBook,
+                                BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "books/new";
+        }
+
         bookDAO.save(newBook);
         return "redirect:/books";
     }
@@ -76,8 +84,13 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}")
-    public String saveEditedBook(@ModelAttribute("book") Book editedBook,
+    public String saveEditedBook(@ModelAttribute("book") @Valid Book editedBook,
+                                 BindingResult bindingResult,
                                  @PathVariable("id") int id) {
+
+        if (bindingResult.hasErrors()) {
+            return String.format("/books/%d/edit", id);
+        }
 
         bookDAO.update(editedBook, id);
         return "redirect:/books";

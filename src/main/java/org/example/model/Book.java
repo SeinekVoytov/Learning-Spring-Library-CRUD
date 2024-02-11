@@ -1,11 +1,24 @@
 package org.example.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class Book {
 
     private int bookId;
     private int memberId;
+
+    @Size(min = 1, max = 100, message = "Length of book title should me between 1 and 100")
     private String title;
+
+    @Size(min = 2, max = 100, message = "Length of author name should me between 1 and 100")
     private String author;
+
+    @Min(value = 0, message = "Publishing year should be greater or equal then 0")
+    @Max(value = 2024, message = "Publishing year should be less or equal then 2024")
+    @NotNull(message = "Publishing year cannot be null")
     private int publishingYear;
 
     public Book() {

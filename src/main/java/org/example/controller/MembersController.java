@@ -1,10 +1,13 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.dao.MemberDAO;
 import org.example.model.Member;
+import org.example.util.MemberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -14,10 +17,12 @@ import java.util.Optional;
 public class MembersController {
 
     private final MemberDAO dao;
+    private final MemberValidator validator;
 
     @Autowired
-    public MembersController(MemberDAO dao) {
+    public MembersController(MemberDAO dao, MemberValidator validator) {
         this.dao = dao;
+        this.validator = validator;
     }
 
     @GetMapping()
@@ -47,7 +52,14 @@ public class MembersController {
     }
 
     @PostMapping()
-    public String createNewMember(@ModelAttribute("member") Member newMember) {
+    public String createNewMember(@ModelAttribute("member") @Valid Member newMember,
+                                  BindingResult bindingResult) {
+
+        validator.validate(newMember, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "members/new";
+        }
+
         dao.save(newMember);
         return "redirect:/members";
     }
@@ -68,8 +80,14 @@ public class MembersController {
     }
 
     @PatchMapping("/{id}")
-    public String saveEditedMember(@ModelAttribute("member") Member editedMember,
+    public String saveEditedMember(@ModelAttribute("member") @Valid Member editedMember,
+                                   BindingResult bindingResult,
                                    @PathVariable("id") int id) {
+
+        validator.validate(editedMember, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return String.format("members/%d/edit", id);
+        }
 
         dao.update(editedMember, id);
         return "redirect:/members";

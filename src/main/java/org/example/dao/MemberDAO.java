@@ -41,4 +41,9 @@ public class MemberDAO {
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM Member WHERE member_id = ?", id);
     }
+
+    public Optional<Member> showByFullName(String fullName) {
+        return jdbcTemplate.query("SELECT * FROM Member M LEFT JOIN Book B on M.member_id = B.member_id WHERE M.full_name = ?",
+                new MemberResultSetExtractor(), fullName).stream().findAny();
+    }
 }
