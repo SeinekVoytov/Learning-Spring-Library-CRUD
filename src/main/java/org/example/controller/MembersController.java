@@ -52,6 +52,29 @@ public class MembersController {
         return "redirect:/members";
     }
 
+    @GetMapping("/{id}/edit")
+    public String editMember(Model model,
+                             @PathVariable("id") int id) {
+
+        Optional<Member> optionalMemberToBeEdited = dao.show(id);
+        if (optionalMemberToBeEdited.isEmpty()) {
+            return "error/not-found";
+        }
+
+        Member memberToBeEdited = optionalMemberToBeEdited.get();
+        model.addAttribute("member", memberToBeEdited);
+
+        return "members/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String saveEditedMember(@ModelAttribute("member") Member editedMember,
+                                   @PathVariable("id") int id) {
+
+        dao.update(editedMember, id);
+        return "redirect:/members";
+    }
+
     @DeleteMapping("/{id}")
     public String deleteMember(@PathVariable("id") int id) {
         dao.delete(id);

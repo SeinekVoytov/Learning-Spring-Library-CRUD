@@ -34,7 +34,8 @@ public class MemberDAO {
     }
 
     public void update(Member updatedMember, int id) {
-
+        jdbcTemplate.update("UPDATE Member SET full_name = ?, birth_year = ? WHERE member_id = ?",
+                updatedMember.getFullName(), updatedMember.getBirthYear(), id);
     }
 
     public void delete(int id) {

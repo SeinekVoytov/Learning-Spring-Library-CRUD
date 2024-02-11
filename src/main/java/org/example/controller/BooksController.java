@@ -76,10 +76,10 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}")
-    public String saveEditedBook(@ModelAttribute("book") Book updatedBook,
+    public String saveEditedBook(@ModelAttribute("book") Book editedBook,
                                  @PathVariable("id") int id) {
 
-        bookDAO.update(updatedBook, id);
+        bookDAO.update(editedBook, id);
         return "redirect:/books";
     }
 
